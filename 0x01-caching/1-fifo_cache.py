@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Basic caching module.
 """
+from collections import OrderedDict
 from base_caching import BaseCaching
 
 
@@ -8,15 +9,20 @@ class FIFOCache(BaseCaching):
     """
     class fifo cahce
     """
+    def __init__(self):
+        """Initializes the cache.
+        """
+        super().__init__()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
         """add item"""
-        if key is not None or item is not None:
-            self.cache_data[key] = item
-            if len(self.cache_data) > self.MAX_ITEMS:
-                discarded_key = sorted(self.cache_data.keys())[0]
-                del self.cache_data[discarded_key]
-                print(f"DISCARD: {discarded_key}")
+        if key is None or item is None:
+            return
+        self.cache_data[key] = item
+        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+            first_key, _ = self.cache_data.popitem(False)
+            print("DISCARD:", first_key)
 
     def get(self, key):
         """get item"""
