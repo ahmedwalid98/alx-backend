@@ -9,9 +9,6 @@ class FIFOCache(BaseCaching):
     class fifo cahce
     """
 
-    def __init__(self):
-        super().__init__()
-
     def put(self, key, item):
         """add item"""
         if key is not None or item is not None:
